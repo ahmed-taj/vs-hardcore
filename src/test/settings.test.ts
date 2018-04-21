@@ -1,9 +1,14 @@
+// Native
+import { platform } from "os";
+
 // Packages
 import * as assert from "assert";
 import { workspace } from "vscode";
 
 // Ours
 import { setup, reset } from "../settings";
+
+const os = platform();
 
 suite("Settings", function() {
 	test("Setup configurations", async () => {
@@ -17,7 +22,9 @@ suite("Settings", function() {
 
 		// Window
 		const w = workspace.getConfiguration("window");
-		assert.equal(w.get("menuBarVisibility"), "toggle");
+		if (os !== "darwin") {
+			assert.equal(w.get("menuBarVisibility"), "toggle");
+		}
 
 		// Explorer
 		const e = workspace.getConfiguration("explorer");
@@ -35,7 +42,9 @@ suite("Settings", function() {
 
 		// Window
 		const w = workspace.getConfiguration("window");
-		assert.equal(w.get("menuBarVisibility"), "default");
+		if (os !== "darwin") {
+			assert.equal(w.get("menuBarVisibility"), "default");
+		}
 
 		// Explorer
 		const e = workspace.getConfiguration("explorer");

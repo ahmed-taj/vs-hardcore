@@ -1,3 +1,6 @@
+// Native
+import { platform } from "os";
+
 // Packages
 import { workspace, ConfigurationTarget, WorkspaceConfiguration } from "vscode";
 
@@ -40,8 +43,10 @@ const setup = async (disable: boolean = false) => {
 	const window = workspace.getConfiguration("window");
 
 	// A setting of 'toggle' means that the menu bar is hidden and a single
-	// press of the Alt key will show it
-	await apply(window, "menuBarVisibility", disable ? reset : "toggle");
+	// press of the Alt key will show it. It's not available on macOS
+	if (platform() !== "darwin") {
+		await apply(window, "menuBarVisibility", disable ? reset : "toggle");
+	}
 };
 
 /**
