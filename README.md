@@ -1,5 +1,7 @@
 # Hardcore Mode
 
+[![Build Status](https://travis-ci.org/ahmed-taj/vs-hardcore.svg?branch=master)](https://travis-ci.org/ahmed-taj/vs-hardcore)
+
 The missing hardcore mode for Visual Studio Code.
 
 ## Features
