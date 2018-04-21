@@ -1,44 +1,54 @@
 // Packages
-import * as vscode from "vscode";
+import { workspace, ConfigurationTarget, WorkspaceConfiguration } from "vscode";
+
+/**
+ * Apply given configuration to user/global settings
+ *
+ * @param config Target configuration section
+ * @param k Configuration name
+ * @param v New value
+ */
+const apply = async (config: WorkspaceConfiguration, k: string, v: any) => {
+	return config.update(k, v, ConfigurationTarget.Global);
+};
 
 /**
  * Setup Hardcore Mode settings
  */
-export function setup(disable: boolean = false) {
-	// Target the user/global configurations
-	const glob = vscode.ConfigurationTarget.Global;
-
+const setup = async (disable: boolean = false) => {
 	// To reset a configuration value we use "undefined"
 	const reset = undefined;
 
 	// Workbench
 	// =========
-	const workbench = vscode.workspace.getConfiguration("workbench");
+	const workbench = workspace.getConfiguration("workbench");
 
 	// Disable Tabs
-	workbench.update("editor.showTabs", disable ? reset : false, glob);
+	await apply(workbench, "editor.showTabs", disable ? reset : false);
 	// Hide Activity Bar
-	workbench.update("activityBar.visible", disable ? reset : false, glob);
+	await apply(workbench, "activityBar.visible", disable ? reset : false);
 
 	// Explorer
 	// ========
-	const explorer = vscode.workspace.getConfiguration("explorer");
+	const explorer = workspace.getConfiguration("explorer");
 
 	// Hide Open editors
-	explorer.update("openEditors.visible", disable ? reset : 0, glob);
+	await apply(explorer, "openEditors.visible", disable ? reset : 0);
 
 	// Window
 	// ========
-	const window = vscode.workspace.getConfiguration("window");
+	const window = workspace.getConfiguration("window");
 
 	// A setting of 'toggle' means that the menu bar is hidden and a single
 	// press of the Alt key will show it
-	window.update("menuBarVisibility", disable ? reset : "toggle", glob);
-}
+	await apply(window, "menuBarVisibility", disable ? reset : "toggle");
+};
 
 /**
  * Reset default User settings
  */
-export function reset() {
-	setup(true);
-}
+const reset = async () => {
+	return setup(true);
+};
+
+export { reset, setup };
