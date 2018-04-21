@@ -12,6 +12,7 @@ install:
 
 test_script:
   - npm --version
+  - set CODE_TESTS_PATH=C:\projects\vs-hardcore\dist\test
   - npm test
 
 # Don't actually build.
