@@ -16,5 +16,5 @@ install:
   - npm run vscode:prepublish
 
 script:
-	- export CODE_TESTS_PATH=$(pwd)/dist/test
-	- npm test --silent
+  - export CODE_TESTS_PATH=$(pwd)/dist/test
+  - npm test --silent
